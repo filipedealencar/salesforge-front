@@ -1,4 +1,11 @@
-import React, { useContext, useMemo } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useTable } from "react-table";
 import {
   TableStyle,
@@ -10,8 +17,20 @@ import {
   TableWrapper,
   ContainerTable,
 } from "./styles";
+import { GlobalContext } from "@/contexts/GlobalContext";
+import { Pagination } from "./Pagination";
 
-const CustomTable: React.FC<ICustomTable> = ({ data, responsive }) => {
+const CustomTable: React.FC<ICustomTable> = ({
+  data,
+  visiblePages,
+  pageSize,
+  pageTotal,
+  totalRows,
+  pageChangeHandler,
+  onPageSizeChange,
+}) => {
+  const { sizeScreen } = useContext(GlobalContext);
+
   const columns = useMemo(() => {
     if (data.length === 0) {
       return [];
@@ -30,60 +49,14 @@ const CustomTable: React.FC<ICustomTable> = ({ data, responsive }) => {
       data,
     });
 
-  const TableResponsive: React.FC<{ dataResponsive: any[] }> = ({
-    dataResponsive,
-  }) => {
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-      useTable({
-        columns,
-        data: dataResponsive,
-      });
-    return (
-      <TableStyle {...getTableProps()}>
-        <TheadStyle>
-          {React.Children.toArray(
-            headerGroups.map((headerGroup, index) => (
-              <TRStyle
-                {...headerGroup.getHeaderGroupProps()}
-                key={headerGroup.id}
-              >
-                {React.Children.toArray(
-                  headerGroup.headers.map((column) => (
-                    <THStyle {...column.getHeaderProps()} key={column.id}>
-                      {column.render("Header")}
-                    </THStyle>
-                  ))
-                )}
-              </TRStyle>
-            ))
-          )}
-        </TheadStyle>
-        <TbodyStyle {...getTableBodyProps()}>
-          {React.Children.toArray(
-            rows.map((row, index) => {
-              prepareRow(row);
-              return (
-                <TRStyle {...row.getRowProps()} key={row.id}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <TDStyle {...cell.getCellProps()} key={cell.column.id}>
-                        {cell.render("Cell")}
-                      </TDStyle>
-                    );
-                  })}
-                </TRStyle>
-              );
-            })
-          )}
-        </TbodyStyle>
-      </TableStyle>
-    );
-  };
-
-  const TableDefault = ({}) => {
-    return (
+  return (
+    <>
       <TableWrapper>
-        <ContainerTable>
+        <ContainerTable
+          style={{
+            height: `calc(100vh - 274px)`,
+          }}
+        >
           <TableStyle {...getTableProps()}>
             <TheadStyle>
               {React.Children.toArray(
@@ -123,21 +96,17 @@ const CustomTable: React.FC<ICustomTable> = ({ data, responsive }) => {
               )}
             </TbodyStyle>
           </TableStyle>
-        </ContainerTable>
+        </ContainerTable>{" "}
       </TableWrapper>
-    );
-  };
-
-  return responsive ? (
-    <TableWrapper>
-      <ContainerTable>
-        {React.Children.toArray(
-          data.map((item) => <TableResponsive dataResponsive={[item]} />)
-        )}
-      </ContainerTable>
-    </TableWrapper>
-  ) : (
-    <TableDefault />
+      <Pagination
+        onPageSizeChange={onPageSizeChange}
+        pageChangeHandler={pageChangeHandler}
+        totalRows={totalRows}
+        visiblePages={visiblePages}
+        pageSize={pageSize}
+        pageTotal={pageTotal}
+      />
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 
 export const TableWrapper = styled.div`
+  height: 100%;
   &::-webkit-scrollbar {
     width: 5px;
     height: 5px;

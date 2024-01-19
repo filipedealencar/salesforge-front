@@ -1,31 +1,29 @@
 import { Button } from "@/components/Buttons";
 import {
   ButtonSidebar,
+  ContainerIcon,
+  ContainerSeparator,
+  ContentAvatar,
   ContentIcon,
   ContentIconLoupeSidebar,
   ContentMobile,
   OpenSearchMobileSidebar,
+  SeparatorLine,
   SidebarWrapper,
   TextIcon,
 } from "./styles";
-import {
-  IconAdd,
-  IconList,
-  IconLogotipo,
-  IconLoupe,
-  IconOverview,
-} from "@/icons";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useState, useRef, useContext, useEffect } from "react";
 import { GlobalContext } from "@/contexts/GlobalContext";
 import useScreenSize from "@/hooks/useScreenSize";
 import { Backdrop } from "@/components/Backdrop";
-import InputSearch from "@/components/InputSearch";
 import { useRouter } from "next/router";
+import { IconHome } from "@/icons";
+import Avatar from "@/components/Avatar";
 
 const Sidebar: React.FC<ISidebar> = ({ isOpen, refSideBar }) => {
   const [isOpenSearchButton, setIsOpenSearchButton] = useState(false);
-  const { sizeScreen, setCurrentPatient } = useContext(GlobalContext);
+  const { sizeScreen } = useContext(GlobalContext);
   const router = useRouter();
   const pathname = router.pathname;
   const screenSize = useScreenSize();
@@ -65,47 +63,23 @@ const Sidebar: React.FC<ISidebar> = ({ isOpen, refSideBar }) => {
   return (
     <>
       <SidebarWrapper ref={refSideBar} $isOpen={isOpen}>
-        {screenSize === "tablet" && sizeScreen.width > sizeScreen.height && (
-          <ContentMobile ref={refContentMobile}>
-            <IconLogotipo />
-            <ContentIconLoupeSidebar>
-              <div
-                ref={refContainerButtonSearch}
-                onClick={() => {
-                  setIsOpenSearchButton((state) => !state);
-                }}
-              >
-                <IconLoupe />
-              </div>
-              <OpenSearchMobileSidebar
-                $customWidth={sizeScreen.width - 100}
-                $isOpen={isOpenSearchButton}
-                ref={refSearchButtonMobile}
-              >
-                <InputSearch
-                  styles={{
-                    container: { width: "50%", height: "40px" },
-                  }}
-                />
-              </OpenSearchMobileSidebar>
-            </ContentIconLoupeSidebar>
-          </ContentMobile>
-        )}
         <ButtonSidebar
           $customHeight={
             sizeScreen.height - customSizes.contentMobile.height - 20
           }
         >
-          <ContentIcon
-            onClick={() => {
-              router.push("/");
-              setCurrentPatient(undefined);
-            }}
-            $isActive={pathname === "/"}
-          >
-            <IconList />
-            {/* <TextIcon $isActive={pathname === "/"}>Lista</TextIcon> */}
-          </ContentIcon>
+          <ContentAvatar>
+            <Avatar size="50px" />
+          </ContentAvatar>
+          <ContainerSeparator>
+            <SeparatorLine />
+          </ContainerSeparator>
+
+          <ContainerIcon>
+            <ContentIcon>
+              <IconHome />
+            </ContentIcon>
+          </ContainerIcon>
         </ButtonSidebar>
       </SidebarWrapper>
 

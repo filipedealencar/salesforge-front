@@ -20,21 +20,18 @@ export const SidebarWrapper = styled.div<{ $isOpen: boolean }>`
 export const ButtonSidebar = styled.div<{ $customHeight?: number }>`
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 18px;
   width: 100%;
   height: ${({ $customHeight }) => $customHeight}px;
   overflow: ${({ $customHeight }) => $customHeight && "auto"};
 `;
 
-export const ContentIcon = styled.div<{ $isActive: boolean }>`
+export const ContainerIcon = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 20px;
-  /* background: ${({ $isActive }) => ($isActive ? "#f4f7fc" : "#2d695a")}; */
-  border-radius: 20px 0 0 20px;
 
   &:hover {
     filter: brightness(0.8);
@@ -43,11 +40,20 @@ export const ContentIcon = styled.div<{ $isActive: boolean }>`
   svg {
     width: 30px;
     height: 30px;
-
-    path {
-      fill: ${({ $isActive }) => ($isActive ? "#2d695a" : "#fff")};
-    }
   }
+`;
+export const ContentIcon = styled.div`
+  padding: 10px 20px;
+  background: #235a4b;
+  border-radius: 10px;
+`;
+
+export const ContentAvatar = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
 `;
 
 export const TextIcon = styled.span<{ $isActive: boolean }>`
@@ -100,4 +106,14 @@ export const OpenSearchMobileSidebar = styled.div<{
   text-align: center;
   top: ${({ $isOpen }) => ($isOpen ? "-50%" : "-500%")};
   transition: all 0.5s ease-out 0s;
+`;
+
+export const ContainerSeparator = styled.div`
+  padding: 0 20px;
+`;
+
+export const SeparatorLine = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  margin: 10px 0;
 `;

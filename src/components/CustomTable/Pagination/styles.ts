@@ -28,24 +28,31 @@ export const PageNavigationContainer = styled.div`
   justify-content: flex-end;
 `;
 
-export const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div<{ $isVisible: boolean }>`
   display: flex;
   gap: 12px;
   align-items: center;
   cursor: pointer;
+
+  visibility: ${({ $isVisible }) => ($isVisible ? "visible" : "hidden")};
 `;
 export const TextPagination = styled.span`
   font-size: 12px;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
+  user-select: none;
 `;
-export const TextValuePagination = styled.span<{ $isActive?: boolean }>`
+export const TextValuePagination = styled.span<{
+  $isActive?: boolean;
+  $isEllipsis: boolean;
+}>`
   font-size: 12px;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   padding: 10px 18px;
-  cursor: pointer;
+  user-select: none;
   border-radius: 10px;
+  cursor: ${({ $isEllipsis }) => ($isEllipsis ? "default" : "pointer")};
   color: ${({ $isActive }) => $isActive && "#fff"};
   background: ${({ $isActive }) => ($isActive ? "#2d695a" : "none")};
 `;
@@ -62,4 +69,5 @@ export const TextSelect = styled.span`
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   color: #797979;
+  user-select: none;
 `;

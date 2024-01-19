@@ -40,6 +40,7 @@ export const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
   ) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPagesArray, setTotalPagesArray] = useState<number[]>([]);
+    const [ellipsisEvery, setEllipsisEvery] = useState(4);
 
     useEffect(() => {
       setTotalPagesArray(
@@ -65,33 +66,70 @@ export const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
       setCurrentPage(pageNumber);
     };
 
+    const generatePaginationArray = () => {
+      const visiblePages = 3;
+      const sidePages = Math.floor(4 / 2);
+
+      let startPage = Math.max(1, currentPage - sidePages);
+      let endPage = Math.min(pageTotal, startPage + visiblePages - 1);
+
+      if (endPage - startPage + 1 < visiblePages) {
+        startPage = Math.max(1, endPage - visiblePages + 1);
+      }
+
+      const paginationArray = [];
+
+      if (startPage > 1) {
+        paginationArray.push("...");
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        paginationArray.push(i);
+      }
+
+      if (endPage < pageTotal - 3) {
+        paginationArray.push("...");
+        paginationArray.push(pageTotal - 2);
+        paginationArray.push(pageTotal - 1);
+        paginationArray.push(pageTotal);
+      }
+
+      return paginationArray;
+    };
+
+    // const totalPagesArray = generatePaginationArray();
+
     return (
       <WrrapperPagination ref={ref}>
         <PaginationContainer>
-          {currentPage > 1 && (
-            <ButtonContainer onClick={onPrevPage}>
-              <ArrowBackwardsNoBorderIcon />
-              <TextPagination>Anterior</TextPagination>
-            </ButtonContainer>
-          )}
+          <ButtonContainer $isVisible={currentPage > 1} onClick={onPrevPage}>
+            <ArrowBackwardsNoBorderIcon />
+            <TextPagination>Anterior</TextPagination>
+          </ButtonContainer>
+
           <ContainerItens>
             {React.Children.toArray(
-              totalPagesArray.map((total, i, arr) => (
+              generatePaginationArray().map((total, i, arr) => (
                 <TextValuePagination
-                  onClick={() => onPageSelect(total)}
+                  onClick={() =>
+                    total === "..." ? null : onPageSelect(Number(total))
+                  }
                   $isActive={total === currentPage}
+                  $isEllipsis={total === "..."}
                 >
                   {total}
                 </TextValuePagination>
               ))
             )}
           </ContainerItens>
-          {currentPage < pageTotal && (
-            <ButtonContainer onClick={onNextPage}>
-              <TextPagination>Próximo</TextPagination>
-              <ArrowForwardNoBorderIcon />
-            </ButtonContainer>
-          )}
+
+          <ButtonContainer
+            $isVisible={currentPage < pageTotal}
+            onClick={onNextPage}
+          >
+            <TextPagination>Próximo</TextPagination>
+            <ArrowForwardNoBorderIcon />
+          </ButtonContainer>
         </PaginationContainer>
         <ContentSelect>
           <TextSelect>Linhas por página</TextSelect>

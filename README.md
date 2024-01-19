@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sales Forge (Front-end) - Luis Filipe J Alencar
 
-## Getting Started
+O Sales Forge (Front-end) é a interface de usuário do sistema de gerenciamento de vendas, proporcionando uma experiência intuitiva e amigável para visualização e interação com os dados das vendas. Este projeto foi desenvolvido utilizando Next.js com TypeScript, e inclui bibliotecas como SWR, Styled Components, React Loading Skeleton.
 
-First, run the development server:
+## Desenvolvedor
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O Sales Forge foi 100% desenvolvido por Luis Filipe Joaquim de Alencar
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Visualize e interaja com os dados de vendas.**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Tecnologias Utilizadas
 
-## Learn More
+- **React e Next.js:** Frameworks JavaScript amplamente utilizados para construção de interfaces web modernas.
+- **TypeScript:** Adiciona tipagem estática ao JavaScript, trazendo benefícios de legibilidade e manutenibilidade ao código.
+- **SWR:** Biblioteca React que fornece uma abordagem eficiente para buscar, armazenar em cache e gerenciar o estado de dados remotos.
+- **Styled Components:** Estiliza componentes em aplicações React usando uma abordagem baseada em componentes e CSS-in-JS (CSS dentro do JavaScript). .
+- **React Loading Skeleton:** Adiciona esqueletos de carregamento para melhorar a experiência do usuário durante o carregamento de dados.
 
-To learn more about Next.js, take a look at the following resources:
+## Principais Destaques
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Interface intuitiva e fácil de usar.**
+- **Atualização dinâmica dos dados dos vendas.**
+- **Estilização moderna e consistente com Styled Components.**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Como Executar o Projeto
 
-## Deploy on Vercel
+To get started with the project, follow these steps:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Clone o repositório::**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   git clone https://github.com/filipedealencar/salesforge-front.git
+
+   ```
+
+2. **Entre no repositório do projeto**
+
+   ```bash
+   cd salesforge-front
+
+   ```
+
+3. **Instale as dependências:**
+
+   ```bash
+   yarn install
+
+   ```
+
+4. **Inicie a aplicação:**
+
+   ```bash
+   yarn dev
+   ```
+
+Agora você pode acessar o projeto em http://localhost:3000.
+
+## Contribuições
+
+Contribuições são bem-vindas! Se você encontrar problemas, bugs ou melhorias potenciais, sinta-se à vontade para abrir uma issue ou enviar um pull request.

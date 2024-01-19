@@ -46,15 +46,13 @@ export const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
       setTotalPagesArray(
         Array.from({ length: pageTotal }, (_, index) => index + 1)
       );
-
-      console.log(totalPagesArray);
     }, [totalRows, pageSize, pageTotal]);
 
-    useEffect(() => {
-      if (currentPage) {
-        pageChangeHandler?.(currentPage);
-      }
-    }, [currentPage]);
+    // useEffect(() => {
+    //   if (currentPage) {
+    //     pageChangeHandler?.(currentPage);
+    //   }
+    // }, [currentPage]);
 
     const onNextPage = () => {
       setCurrentPage(currentPage + 1);
@@ -135,6 +133,7 @@ export const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
           <TextSelect>Linhas por página</TextSelect>
           <Select
             // width={54}
+
             backgroundColor={"#fff"}
             options={[
               { value: "10", label: "10" },
@@ -142,6 +141,7 @@ export const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
               { value: "50", label: "50" },
             ]}
             onChange={(option) => {
+              console.log(option);
               onPageSizeChange && onPageSizeChange(currentPage, Number(option));
             }}
           />

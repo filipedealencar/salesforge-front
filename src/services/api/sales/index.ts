@@ -28,9 +28,9 @@ export async function getAllSales(params?: {
       }`
     );
 
-    if (!response.ok) {
-      throw new Error(`Erro na requisição GET: ${response.statusText}`);
-    }
+    // if (!response.ok) {
+    //   throw new Error(`Erro na requisição GET: ${response.statusText}`);
+    // }
 
     const data: SalesResponse = await response.json();
     return data;

@@ -29,8 +29,6 @@ const CustomTable: React.FC<ICustomTable> = ({
   pageChangeHandler,
   onPageSizeChange,
 }) => {
-  const { sizeScreen } = useContext(GlobalContext);
-
   const columns = useMemo(() => {
     if (data.length === 0) {
       return [];

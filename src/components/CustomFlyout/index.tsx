@@ -153,7 +153,7 @@ export const CustomFlyout: React.FC<IFlayout> = ({
                   filterCallback("dataVenda", val);
                   closedFlyout(!openFlyout);
                 }}
-                title="ID da Bandeira do Cartão"
+                title="Data da venda"
                 options={[]}
                 type={"input"}
               />

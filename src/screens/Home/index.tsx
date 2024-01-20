@@ -29,6 +29,7 @@ const Home: React.FC = ({}) => {
   });
 
   const [openFlyout, setOpenFlyout] = useState(false);
+  const [loadRequest, setLoadRequest] = useState(false);
 
   const fetchPage = (params?: {
     idBandeiraCartao?: string;
@@ -37,7 +38,14 @@ const Home: React.FC = ({}) => {
     pageSize?: string;
     page?: string;
   }) => {
-    getAllSales(params).then((res) => setSalesData(res));
+    setLoadRequest(true);
+    getAllSales(params)
+      .then((res) => setSalesData(res))
+      .finally(() =>
+        setTimeout(() => {
+          setLoadRequest(false);
+        }, 1000)
+      );
   };
 
   useEffect(() => {
@@ -99,12 +107,14 @@ const Home: React.FC = ({}) => {
             </ButtonFilter>
           </ContainerTextTitle>
           <CustomTable
-            pageChangeHandler={(val) => {
-              fetchPage({ page: String(val) });
-              console.log(val);
+            loading={loadRequest}
+            pageChangeHandler={(currentPage, pageSize) => {
+              fetchPage({
+                page: String(currentPage),
+                pageSize: String(pageSize),
+              });
             }}
             onPageSizeChange={(currentPage, pageSize) => {
-              console.log(pageSize);
               fetchPage({
                 // page: String(currentPage),
                 pageSize: String(pageSize),

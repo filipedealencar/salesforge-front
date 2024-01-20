@@ -4,6 +4,7 @@ interface ICustomTable {
   pageTotal: number;
   pageSize: number;
   totalRows?: number;
-  pageChangeHandler?: (currentPage: number) => void;
+  pageChangeHandler?: (currentPage: number, pageSize: number) => void;
   onPageSizeChange?: (currentPage: number, pageSize: number) => void;
+  loading: boolean;
 }

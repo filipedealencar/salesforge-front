@@ -7,6 +7,7 @@ import {
   ContentItemCollapse,
   ContentInput,
   InputCollapse,
+  ButtonInput,
 } from "./styles";
 import { IconArrowSelect } from "@/icons";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -22,6 +23,7 @@ const CustomCollapse: React.FC<CollapseProps> = ({
   filterBy,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
     setIsOpen(openCollapse);
@@ -30,7 +32,10 @@ const CustomCollapse: React.FC<CollapseProps> = ({
   const toggleCollapse = () => {
     setIsOpen(!isOpen);
   };
-  const [startDate, setStartDate] = useState(new Date());
+
+  const handleDateSearch = () => {
+    filterBy && filterBy(startDate.toLocaleDateString());
+  };
 
   return (
     <CollapseContainer ref={ref}>
@@ -49,11 +54,11 @@ const CustomCollapse: React.FC<CollapseProps> = ({
               }}
               onChange={(date) => {
                 if (date) {
-                  filterBy && filterBy(new Date(date).toLocaleDateString());
                   setStartDate(new Date(date));
                 }
               }}
             />
+            <ButtonInput onClick={handleDateSearch}>Enviar</ButtonInput>
           </ContentInput>
         ) : (
           React.Children.toArray(

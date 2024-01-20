@@ -50,13 +50,13 @@ export const ItemCollapseOptions = styled.div`
 
 export const ContentInput = styled.div`
   display: flex;
-  flex-direction: row;
-  height: 32px;
+  flex-direction: column;
+  height: 60px;
   border: 1px solid rgb(212, 213, 214);
   border-radius: 4px;
   padding: 4px;
   align-items: center;
-
+  justify-content: space-between;
   position: absolute;
 `;
 
@@ -75,4 +75,23 @@ export const InputCollapse = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+export const ButtonInput = styled.div`
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+  padding: 0px 12px;
+  pointer-events: visible;
+  background-color: #2d695a;
+  border-width: 0px;
+  border-style: solid;
+  border-color: #2d695a;
+  border-radius: 4px;
+  user-select: none;
+  cursor: pointer;
 `;

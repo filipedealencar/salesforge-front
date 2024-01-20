@@ -19,6 +19,8 @@ import {
 } from "./styles";
 import { GlobalContext } from "@/contexts/GlobalContext";
 import { Pagination } from "./Pagination";
+import CustomSkeleton from "../CustomSkeleton";
+import NoData from "./NoData";
 
 const CustomTable: React.FC<ICustomTable> = ({
   data,
@@ -26,9 +28,19 @@ const CustomTable: React.FC<ICustomTable> = ({
   pageSize,
   pageTotal,
   totalRows,
+  loading,
   pageChangeHandler,
   onPageSizeChange,
 }) => {
+  const tableRef = useRef<HTMLTableElement>(null);
+
+  const { sizeScreen } = useContext(GlobalContext);
+  const [tableSize, setTableSize] = useState(0);
+
+  useEffect(() => {
+    setTableSize(tableRef.current?.getBoundingClientRect().width ?? 100);
+  }, [sizeScreen, tableRef.current]);
+
   const columns = useMemo(() => {
     if (data.length === 0) {
       return [];
@@ -55,7 +67,7 @@ const CustomTable: React.FC<ICustomTable> = ({
             height: `calc(100vh - 274px)`,
           }}
         >
-          <TableStyle {...getTableProps()}>
+          <TableStyle ref={tableRef} {...getTableProps()}>
             <TheadStyle>
               {React.Children.toArray(
                 headerGroups.map((headerGroup, index) => (
@@ -72,29 +84,48 @@ const CustomTable: React.FC<ICustomTable> = ({
                 ))
               )}
             </TheadStyle>
-            <TbodyStyle {...getTableBodyProps()}>
-              {React.Children.toArray(
-                rows.map((row, index) => {
-                  prepareRow(row);
-                  return (
-                    <TRStyle {...row.getRowProps()} key={row.id}>
-                      {row.cells.map((cell) => {
-                        return (
-                          <TDStyle
-                            {...cell.getCellProps()}
-                            key={cell.column.id}
-                          >
-                            {cell.render("Cell")}
-                          </TDStyle>
-                        );
-                      })}
-                    </TRStyle>
-                  );
-                })
-              )}
-            </TbodyStyle>
+            {data.length > 0 ? (
+              loading ? (
+                <CustomSkeleton
+                  params={{
+                    count: 10,
+                    width: `${tableSize - 20}`,
+                    style: {
+                      width: tableSize,
+                      position: "absolute",
+                      height: "calc(100vh - 312px)",
+                      overflow: "scroll",
+                    },
+                  }}
+                />
+              ) : (
+                <TbodyStyle {...getTableBodyProps()}>
+                  {React.Children.toArray(
+                    rows.map((row, index) => {
+                      prepareRow(row);
+                      return (
+                        <TRStyle {...row.getRowProps()} key={row.id}>
+                          {row.cells.map((cell) => {
+                            return (
+                              <TDStyle
+                                {...cell.getCellProps()}
+                                key={cell.column.id}
+                              >
+                                {cell.render("Cell")}
+                              </TDStyle>
+                            );
+                          })}
+                        </TRStyle>
+                      );
+                    })
+                  )}
+                </TbodyStyle>
+              )
+            ) : (
+              <NoData />
+            )}
           </TableStyle>
-        </ContainerTable>{" "}
+        </ContainerTable>
       </TableWrapper>
       <Pagination
         onPageSizeChange={onPageSizeChange}

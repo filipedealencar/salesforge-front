@@ -23,13 +23,13 @@ export const CustomFlyout: React.FC<IFlayout> = ({
 
   const [openFlyout, setOpenFlyout] = useState(false);
 
-  useOutsideClick({
-    ref: refFlyout,
-    callback: () => {
-      setOpenFlyout(false);
-      closedFlyout(!openFlyout);
-    },
-  });
+  // useOutsideClick({
+  //   ref: refFlyout,
+  //   callback: () => {
+  //     setOpenFlyout(false);
+  //     closedFlyout(!openFlyout);
+  //   },
+  // });
 
   useEffect(() => {
     setOpenFlyout(isOpen);
